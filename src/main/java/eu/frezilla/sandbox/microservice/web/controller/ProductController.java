@@ -9,6 +9,7 @@ import eu.frezilla.sandbox.microservice.dao.ProductRepository;
 import java.net.URI;
 import java.util.List;
 import java.util.Objects;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class ProductController {
     private ProductRepository productDao;
  
     @PostMapping(value = "/products")
-     public ResponseEntity<Product> addProduct(@RequestBody Product product) {
+     public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product) {
          Product productSaved = productDao.save(product);
          if (Objects.isNull(productSaved)) {
              return ResponseEntity.noContent().build();

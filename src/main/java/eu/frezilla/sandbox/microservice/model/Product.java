@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 import lombok.Data;
 
 
@@ -16,10 +18,13 @@ public class Product implements Serializable {
     @Id
     private int id;
     
+    @Size(min = 3, max = 255)
     private String name;
     
+    @Min(value = 1)
     private double price;
     
+    @Min(value = 1)
     private double purchasePrice;
     
     @ManyToOne(fetch = FetchType.LAZY)

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import lombok.Data;
 import lombok.NonNull;
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Data
@@ -19,6 +20,7 @@ public class Shelving implements Serializable {
     @JsonIgnore
     private int id;
     
+    @Length(min = 3, max = 255)
     private String name;
     
     @OneToMany(
