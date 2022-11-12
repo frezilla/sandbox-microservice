@@ -1,5 +1,6 @@
 package eu.frezilla.sandbox.microservice.web.controller;
 
+import eu.frezilla.sandbox.microservice.exceptions.ProductNotFoundException;
 import eu.frezilla.sandbox.microservice.model.Product;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +37,11 @@ public class ProductController {
     
     @GetMapping("products/{id}")
     public Product getProductById(@PathVariable int id) {
-        return productDao.findById(id).orElse(null);
+        Product product = productDao.findById(id).orElse(null);
+        if (product == null) {
+            throw new ProductNotFoundException("Le produit #" + id + " est introuvale");
+        } 
+        return product;
     }
 
     @GetMapping("/products")
