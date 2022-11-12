@@ -1,5 +1,8 @@
 package eu.frezilla.sandbox.microservice.web.controller;
 
+import com.fasterxml.jackson.databind.ser.FilterProvider;
+import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import eu.frezilla.sandbox.microservice.exceptions.ProductNotFoundException;
 import eu.frezilla.sandbox.microservice.model.Product;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +15,7 @@ import java.util.Objects;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,8 +50,13 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public List<Product> getProducts() {
-        return productDao.findAll();
+    public MappingJacksonValue getProducts() {
+        List<Product> products = productDao.findAll();
+        SimpleBeanPropertyFilter myFilter = SimpleBeanPropertyFilter.serializeAllExcept("purchasePrice");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("productFilter", myFilter);
+        MappingJacksonValue mjv = new MappingJacksonValue(products);
+        mjv.setFilters(filters);
+        return mjv;
     }
 
 }

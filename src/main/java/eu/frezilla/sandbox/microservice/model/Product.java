@@ -1,5 +1,6 @@
 package eu.frezilla.sandbox.microservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@JsonFilter("productFilter")
 public class Product implements Serializable {
     
     @Id
