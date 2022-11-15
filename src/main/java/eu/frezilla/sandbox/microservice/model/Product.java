@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import lombok.Data;
-
 
 @Data
 @Entity
@@ -18,6 +18,7 @@ import lombok.Data;
 public class Product implements Serializable {
     
     @Id
+    @GeneratedValue
     private int id;
     
     @Size(min = 3, max = 255)
